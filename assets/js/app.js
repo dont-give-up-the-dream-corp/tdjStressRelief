@@ -12,25 +12,29 @@ $(document).ready(function () {
   const setAttr = (x, y, z) => $(x).attr(y, z)
 
   const createList = function (x, y) {
-    const $option = setText(setAttr('<option>', 'value', y), x)
+    const $option = setAttr('<option>', 'value', x.value)
+    setText($option, x.category)
     append('select', $option)
   }
 
-  const getQuestion = function () {
-    let qCategory = getVal('select :selected')
-    const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + qCategory + '&type=multiple'
+  const runAjax = function (q) {
+    const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + q + '&type=multiple'
     $.ajax({
       url: qQueryUrl,
       method: 'GET'
     }).then(function (x) {
+      console.log(x.results)
       const response = x.results[0]
       type = response.type
       question = response.question
       correctAnswer = response.correctAnswer
       possAnswers = concat(response.incorrectAnswers, correctAnswer)
-    }).error(
-      console.log('AJAX request failed')
-    )
+    })
+  }
+
+  let getQuestion = function () {
+    let qCategory = getVal('select :selected')
+    runAjax(qCategory)
   }
 
   const qArray = [
@@ -140,7 +144,10 @@ $(document).ready(function () {
 
   const displayQuestion = function () {
     getQuestion()
+    console.log(question)
     displayAnswers()
+    console.log(question)
+    console.log(possAnswers)
     setText('#question', question)
   }
 
@@ -151,5 +158,5 @@ $(document).ready(function () {
 
   const displayAnswers = () => forEach(possAnswers, getAnswers)
 
-  $(document).on('click', '#submit', displayQuestion)
+  $(document).on('change', 'select', displayQuestion)
 })

@@ -1,8 +1,42 @@
 $(document).ready(function () {
+  let type = ''
+  let question = ''
+  let possAnswers = []
+  let correctAnswer = ''
+
+  const concat = (x, y) => kyanite.concat([x, y])
+  const forEach = (x, y) => x.forEach(y)
+  const getVal = x => $(x).val()
+  const setText = (x, y) => $(x).text(y)
+  const append = (x, y) => $(x).append(y)
+  const setAttr = (x, y, z) => $(x).attr(y, z)
+
+  const createList = function (x, y) {
+    const $option = setText(setAttr('<option>', 'value', y), x)
+    append('select', $option)
+  }
+
+  const getQuestion = function () {
+    let qCategory = getVal('select :selected')
+    const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + qCategory + '&type=multiple'
+    $.ajax({
+      url: qQueryUrl,
+      method: 'GET'
+    }).then(function (x) {
+      const response = x.results[0]
+      type = response.type
+      question = response.question
+      correctAnswer = response.correctAnswer
+      possAnswers = concat(response.incorrectAnswers, correctAnswer)
+    }).error(
+      console.log('AJAX request failed')
+    )
+  }
+
   const qArray = [
     {
       category: 'Any Category',
-      value: any
+      value: 'any'
     },
     {
       category: 'Animals',
@@ -102,32 +136,20 @@ $(document).ready(function () {
     }
   ]
 
-  const forEach = x => $.each(x, y)
-  
-  const setText = (x, y) => $(x).text(y);
-  const append = (x,y) => $(x).append(y);
-
-  const createList = function (x, y) {
-    const $option = $('<option>').attr('value', y)
-    append('select', $option)
-    setText($option, x)
-  }
-
   forEach(qArray, createList)
 
+  const displayQuestion = function () {
+    getQuestion()
+    displayAnswers()
+    setText('#question', question)
+  }
 
-    < option value = "9" > General Knowledge</option>
+  const getAnswers = function (x) {
+    const $li = setText('<li>', x)
+    append('ul', $li)
+  }
 
-      let qCategory
+  const displayAnswers = () => forEach(possAnswers, getAnswers)
 
-
-  $.ajax({
-    url: ,//url//
-    method:
-  }).then(function (response) {
-      //do stuff
-    }).error(
-      console.log(object))
+  $(document).on('click', '#submit', displayQuestion)
 })
-
-

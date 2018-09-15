@@ -11,6 +11,7 @@ $(document).ready(function () {
   const append = (x, y) => $(x).append(y)
   const setAttr = (x, y, z) => $(x).attr(y, z)
   const addClass = (x, y) => $(x).addClass(y)
+  const empty = (x) => $(x).empty()
 
   const createList = function (x, y) {
     const $option = setAttr('<option>', 'value', x.value)
@@ -18,7 +19,17 @@ $(document).ready(function () {
     append('select', $option)
   }
 
-  let getQuestion = function () {
+  const shuffleArray = function (array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1))
+      let temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
+    return array
+  }
+
+  const getQuestion = function () {
     let qCategory = getVal('select :selected')
     const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + qCategory + '&encode=url3986'
     $.ajax({
@@ -29,8 +40,9 @@ $(document).ready(function () {
       type = decodeURIComponent(response.type)
       question = decodeURIComponent(response.question)
       correctAnswer = decodeURIComponent(response.correct_answer)
-      possAnswers = concat(response.incorrect_answers, correctAnswer)
+      possAnswers = shuffleArray(concat(response.incorrect_answers, correctAnswer))
       setText('#question', question)
+      empty('ul')
       displayAnswers()
       console.log(response)
     })
@@ -39,7 +51,7 @@ $(document).ready(function () {
   const qArray = [
     {
       category: 'Any Category',
-      value: 'any'
+      value: ''
     },
     {
       category: 'Animals',

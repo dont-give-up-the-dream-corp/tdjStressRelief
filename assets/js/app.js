@@ -10,6 +10,7 @@ $(document).ready(function () {
   const setText = (x, y) => $(x).text(y)
   const append = (x, y) => $(x).append(y)
   const setAttr = (x, y, z) => $(x).attr(y, z)
+  const addClass = (x, y) => $(x).addClass(y)
 
   const createList = function (x, y) {
     const $option = setAttr('<option>', 'value', x.value)
@@ -141,7 +142,8 @@ $(document).ready(function () {
   forEach(qArray, createList)
 
   const getAnswers = function (x) {
-    const $li = setText('<li>', decodeURIComponent(x))
+    const $li = addClass('<li>', 'answer')
+    setText($li, decodeURIComponent(x))
     append('ul', $li)
   }
 

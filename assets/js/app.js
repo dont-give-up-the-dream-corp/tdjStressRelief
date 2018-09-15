@@ -17,24 +17,22 @@ $(document).ready(function () {
     append('select', $option)
   }
 
-  const runAjax = function (q) {
-    const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + q + '&type=multiple'
+  let getQuestion = function () {
+    let qCategory = getVal('select :selected')
+    const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + qCategory + '&encode=url3986'
     $.ajax({
       url: qQueryUrl,
       method: 'GET'
     }).then(function (x) {
-      console.log(x.results)
       const response = x.results[0]
-      type = response.type
-      question = response.question
-      correctAnswer = response.correctAnswer
-      possAnswers = concat(response.incorrectAnswers, correctAnswer)
+      type = decodeURIComponent(response.type)
+      question = decodeURIComponent(response.question)
+      correctAnswer = decodeURIComponent(response.correct_answer)
+      possAnswers = concat(response.incorrect_answers, correctAnswer)
+      setText('#question', question)
+      displayAnswers()
+      console.log(response)
     })
-  }
-
-  let getQuestion = function () {
-    let qCategory = getVal('select :selected')
-    runAjax(qCategory)
   }
 
   const qArray = [
@@ -142,21 +140,12 @@ $(document).ready(function () {
 
   forEach(qArray, createList)
 
-  const displayQuestion = function () {
-    getQuestion()
-    console.log(question)
-    displayAnswers()
-    console.log(question)
-    console.log(possAnswers)
-    setText('#question', question)
-  }
-
   const getAnswers = function (x) {
-    const $li = setText('<li>', x)
+    const $li = setText('<li>', decodeURIComponent(x))
     append('ul', $li)
   }
 
   const displayAnswers = () => forEach(possAnswers, getAnswers)
 
-  $(document).on('change', 'select', displayQuestion)
+  $(document).on('change', 'select', getQuestion)
 })

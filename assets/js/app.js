@@ -10,6 +10,8 @@ $(document).ready(function () {
   const setText = (x, y) => $(x).text(y)
   const append = (x, y) => $(x).append(y)
   const setAttr = (x, y, z) => $(x).attr(y, z)
+  const addClass = (x, y) => $(x).addClass(y)
+  const empty = (x) => $(x).empty()
 
   const createList = function (x, y) {
     const $option = setAttr('<option>', 'value', x.value)
@@ -17,30 +19,39 @@ $(document).ready(function () {
     append('select', $option)
   }
 
-  const runAjax = function (q) {
-    const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + q + '&type=multiple'
+  const shuffleArray = function (array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1))
+      let temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
+    return array
+  }
+
+  const getQuestion = function () {
+    let qCategory = getVal('select :selected')
+    const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + qCategory + '&encode=url3986'
     $.ajax({
       url: qQueryUrl,
       method: 'GET'
     }).then(function (x) {
-      console.log(x.results)
       const response = x.results[0]
-      type = response.type
-      question = response.question
-      correctAnswer = response.correctAnswer
-      possAnswers = concat(response.incorrectAnswers, correctAnswer)
+      type = decodeURIComponent(response.type)
+      question = decodeURIComponent(response.question)
+      correctAnswer = decodeURIComponent(response.correct_answer)
+      possAnswers = shuffleArray(concat(response.incorrect_answers, correctAnswer))
+      setText('#question', question)
+      empty('ul')
+      displayAnswers()
+      console.log(response)
     })
-  }
-
-  let getQuestion = function () {
-    let qCategory = getVal('select :selected')
-    runAjax(qCategory)
   }
 
   const qArray = [
     {
       category: 'Any Category',
-      value: 'any'
+      value: ''
     },
     {
       category: 'Animals',
@@ -142,21 +153,13 @@ $(document).ready(function () {
 
   forEach(qArray, createList)
 
-  const displayQuestion = function () {
-    getQuestion()
-    console.log(question)
-    displayAnswers()
-    console.log(question)
-    console.log(possAnswers)
-    setText('#question', question)
-  }
-
   const getAnswers = function (x) {
-    const $li = setText('<li>', x)
+    const $li = addClass('<li>', 'answer')
+    setText($li, decodeURIComponent(x))
     append('ul', $li)
   }
 
   const displayAnswers = () => forEach(possAnswers, getAnswers)
 
-  $(document).on('change', 'select', displayQuestion)
+  $(document).on('change', 'select', getQuestion)
 })

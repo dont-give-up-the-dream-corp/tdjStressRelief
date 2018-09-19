@@ -1,0 +1,71 @@
+html{
+    height:100%;
+    cursor:grab;
+}
+
+body{
+    background-color:skyblue;
+    /* font-family: 'Boogaloo', cursive;
+    font-family: 'Press Start 2P', cursive; */
+    /* font-family: 'Chewy', cursive; */
+    font-family: 'Carter One', cursive;
+    /* font-family: 'IBM Plex Serif', serif; */
+    font-size:1.3rem;
+}
+
+h6{
+    float:left;
+}
+
+span{
+    float:right;
+}
+
+.jumbotron-fluid{
+    text-align: center;
+    padding: 1rem 2rem;
+    margin:0;
+    background-color:orange;
+    border-bottom:solid black 3px;
+}
+
+.card{
+    text-align:center;
+    margin-top:1em;
+    border:solid black 3px;
+}
+
+.card-body{
+    padding-bottom:.8rem
+}
+
+.answer{
+    padding: .5em;
+    color:black;
+}
+
+.form-control{
+    width:12rem;
+    margin:auto;
+    font-size:.7rem;
+    margin-top:.5rem;
+    margin-bottom:.2rem;
+}
+
+.list-group-item-action:hover {
+    color: white;
+    text-decoration: none;
+    background-color: black;
+}
+
+#scoreDisplay{
+    width:200px;
+    float:none;
+    background-color:lightgray;
+    padding:3px;
+    margin: auto;
+    border: solid grey 2px;
+    margin-bottom:.8rem;
+    margin-top:0px;
+}
+

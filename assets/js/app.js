@@ -3,6 +3,10 @@ $(document).ready(function () {
   let question = ''
   let possAnswers = []
   let correctAnswer = ''
+  let correct = 0
+  let incorrect = 0
+
+  const percentage = k.curry((x, y) => y > 0 ? x / (x + y).toLocaleString('en-US', { style: 'percent' }) : Number('0').toLocaleString('en-US', { style: 'percent' }))
 
   const concat = (x, y) => k.concat([x, y])
   const forEach = (x, y) => x.forEach(y)

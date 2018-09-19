@@ -1,17 +1,24 @@
 $(document).ready(function () {
-  let type = ''
+  const k = kyanite
   let question = ''
   let possAnswers = []
   let correctAnswer = ''
+  let correct = 0
+  let incorrect = 0
 
-  const concat = (x, y) => kyanite.concat([x, y])
+  const percentage = k.curry((x, y) => y > 0 ? x / (x + y).toLocaleString('en-US', { style: 'percent' }) : Number('0').toLocaleString('en-US', { style: 'percent' }))
+
+  const concat = (x, y) => k.concat([x, y])
   const forEach = (x, y) => x.forEach(y)
   const getVal = x => $(x).val()
   const setText = (x, y) => $(x).text(y)
+  const getText = (x) => $(x).text()
   const append = (x, y) => $(x).append(y)
   const setAttr = (x, y, z) => $(x).attr(y, z)
   const addClass = (x, y) => $(x).addClass(y)
   const empty = (x) => $(x).empty()
+  const show = x => $(x).show()
+  const hide = x => $(x).hide()
 
   const createList = function (x, y) {
     const $option = setAttr('<option>', 'value', x.value)
@@ -37,16 +44,26 @@ $(document).ready(function () {
       method: 'GET'
     }).then(function (x) {
       const response = x.results[0]
-      type = decodeURIComponent(response.type)
       question = decodeURIComponent(response.question)
       correctAnswer = decodeURIComponent(response.correct_answer)
       possAnswers = shuffleArray(concat(response.incorrect_answers, correctAnswer))
       setText('#question', question)
       empty('ul')
       displayAnswers()
-      console.log(response)
     })
   }
+
+  // const getJoke = function () {
+  $.ajax({
+    url: 'https://icanhazdadjoke.com/',
+    method: 'GET',
+    headers: {
+      Accept: 'application/json'
+    }
+  }).then(function (response) {
+    setText('#joke', response.joke)
+    console.log(response.joke)
+  })
 
   const qArray = [
     {
@@ -151,7 +168,11 @@ $(document).ready(function () {
     }
   ]
 
-  forEach(qArray, createList)
+  const initialize = () => {
+    forEach(qArray, createList)
+    hide('#correct')
+    hide('#wrong')
+  }
 
   const getAnswers = function (x) {
     const $li = addClass('<li>', 'answer')
@@ -161,5 +182,17 @@ $(document).ready(function () {
 
   const displayAnswers = () => forEach(possAnswers, getAnswers)
 
+  // Put correct div classes when added to HTML file
+
+  const checkAnswer = k.curry((cAnswer, gAnswer) => gAnswer === cAnswer ? show('#correct') : show('#wrong'))
+
+  $(document).on('click', '.answer', function () {
+    k.pipe([
+      getText,
+      checkAnswer(correctAnswer)
+    ], this)
+  })
   $(document).on('change', 'select', getQuestion)
+
+  initialize()
 })

@@ -49,6 +49,19 @@ $(document).ready(function () {
     })
   }
 
+  // const getJoke = function () {    
+    $.ajax({
+      url: 'https://icanhazdadjoke.com/',
+      method: 'GET',
+      headers: {
+        Accept: "application/json"
+      }
+    }).then(function (response) {
+      setText('#joke', response.joke)
+      console.log(response.joke)
+    })
+  
+
   const qArray = [
     {
       category: 'Any Category',

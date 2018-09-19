@@ -53,18 +53,17 @@ $(document).ready(function () {
     })
   }
 
-  // const getJoke = function () {    
-    $.ajax({
-      url: 'https://icanhazdadjoke.com/',
-      method: 'GET',
-      headers: {
-        Accept: "application/json"
-      }
-    }).then(function (response) {
-      setText('#joke', response.joke)
-      console.log(response.joke)
-    })
-  
+  // const getJoke = function () {
+  $.ajax({
+    url: 'https://icanhazdadjoke.com/',
+    method: 'GET',
+    headers: {
+      Accept: 'application/json'
+    }
+  }).then(function (response) {
+    setText('#joke', response.joke)
+    console.log(response.joke)
+  })
 
   const qArray = [
     {
@@ -188,15 +187,12 @@ $(document).ready(function () {
   const checkAnswer = k.curry((cAnswer, gAnswer) => gAnswer === cAnswer ? show('#correct') : show('#wrong'))
 
   $(document).on('click', '.answer', function () {
-    let text = getText(this)
-    checkAnswer(correctAnswer, text)
+    k.pipe([
+      getText,
+      checkAnswer(correctAnswer)
+    ], this)
   })
   $(document).on('change', 'select', getQuestion)
-
-  k.pipe([
-    getText,
-    checkAnswer(correctAnswer)
-  ], this)
 
   initialize()
 })

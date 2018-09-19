@@ -154,7 +154,7 @@ $(document).ready(function () {
   forEach(qArray, createList)
 
   const getAnswers = function (x) {
-    const $li = addClass('<li>', 'answer')
+    const $li = addClass('<li>', 'answer list-group-item list-group-item-action')
     setText($li, decodeURIComponent(x))
     append('ul', $li)
   }
@@ -162,4 +162,6 @@ $(document).ready(function () {
   const displayAnswers = () => forEach(possAnswers, getAnswers)
 
   $(document).on('change', 'select', getQuestion)
+
+  $(document).on("click",".answer", checkAnswer )
 })

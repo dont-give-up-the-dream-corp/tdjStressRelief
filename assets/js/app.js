@@ -221,5 +221,9 @@ $(document).ready(function () {
 
   $(document).on('change', 'select', getQuestion)
 
+
   initialize(qArray)
+
+  $(document).on("click",".answer", checkAnswer )
+
 })

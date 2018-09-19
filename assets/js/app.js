@@ -24,7 +24,7 @@ $(document).ready(function () {
 
   const createList = x => {
     const $option = $(`<option value="${x.value}">`)
-    touch('text', ['option', x.category])
+    touch('text', [$option, x.category])
     touch('append', ['select', $option])
   }
 
@@ -39,13 +39,14 @@ $(document).ready(function () {
   }
 
   const getQuestion = function () {
-    let qCategory = touch('val', 'select :selected')
+    let qCategory = touch('val', ['select :selected'])
     const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + qCategory + '&encode=url3986'
     $.ajax({
       url: qQueryUrl,
       method: 'GET'
     }).then(function (x) {
       const response = x.results[0]
+      console.log(response)
       question = decodeURIComponent(response.question)
       correctAnswer = decodeURIComponent(response.correct_answer)
       possAnswers = shuffleArray(k.concat([response.incorrect_answers, correctAnswer]))
@@ -172,7 +173,7 @@ $(document).ready(function () {
   ]
 
   const initialize = x => {
-    touch('forEach', [x, createList])
+    x.forEach(createList)
     touch('hide', ['#correct'])
     touch('hide', ['#wrong'])
     touch('hide', ['#jokeDisplay'])
@@ -184,7 +185,7 @@ $(document).ready(function () {
     touch('append', ['ul', $li])
   }
 
-  const displayAnswers = x => touch('forEach', [x, getAnswers])
+  const displayAnswers = x => x.forEach(getAnswers)
 
   // Put correct div classes when added to HTML file
 

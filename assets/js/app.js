@@ -175,7 +175,7 @@ $(document).ready(function () {
   }
 
   const getAnswers = function (x) {
-    const $li = addClass('<li>', 'answer')
+    const $li = addClass('<li>', 'answer list-group-item list-group-item-action')
     setText($li, decodeURIComponent(x))
     append('ul', $li)
   }
@@ -194,5 +194,5 @@ $(document).ready(function () {
   })
   $(document).on('change', 'select', getQuestion)
 
-  initialize()
+  $(document).on("click",".answer", checkAnswer )
 })

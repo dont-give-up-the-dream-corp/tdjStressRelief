@@ -3,6 +3,10 @@ $(document).ready(function () {
   let question = ''
   let possAnswers = []
   let correctAnswer = ''
+  let correct = 0
+  let incorrect = 0
+
+  const percentage = k.curry((x, y) => y > 0 ? x / (x + y).toLocaleString('en-US', { style: 'percent' }) : Number('0').toLocaleString('en-US', { style: 'percent' }))
 
   const concat = (x, y) => k.concat([x, y])
   const forEach = (x, y) => x.forEach(y)
@@ -49,18 +53,17 @@ $(document).ready(function () {
     })
   }
 
-  // const getJoke = function () {    
-    $.ajax({
-      url: 'https://icanhazdadjoke.com/',
-      method: 'GET',
-      headers: {
-        Accept: "application/json"
-      }
-    }).then(function (response) {
-      setText('#joke', response.joke)
-      console.log(response.joke)
-    })
-  
+  // const getJoke = function () {
+  $.ajax({
+    url: 'https://icanhazdadjoke.com/',
+    method: 'GET',
+    headers: {
+      Accept: 'application/json'
+    }
+  }).then(function (response) {
+    setText('#joke', response.joke)
+    console.log(response.joke)
+  })
 
   const qArray = [
     {
@@ -184,15 +187,12 @@ $(document).ready(function () {
   const checkAnswer = k.curry((cAnswer, gAnswer) => gAnswer === cAnswer ? show('#correct') : show('#wrong'))
 
   $(document).on('click', '.answer', function () {
-    let text = getText(this)
-    checkAnswer(correctAnswer, text)
+    k.pipe([
+      getText,
+      checkAnswer(correctAnswer)
+    ], this)
   })
   $(document).on('change', 'select', getQuestion)
-
-  k.pipe([
-    getText,
-    checkAnswer(correctAnswer)
-  ], this)
 
   initialize()
 })

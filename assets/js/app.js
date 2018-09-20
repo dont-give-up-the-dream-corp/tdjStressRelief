@@ -204,13 +204,33 @@ $(document).ready(function () {
   const updateScore = x => {
     if (x) {
       correct++
-      // Do a thing
-      // updateView(correct)
+      updateView();
     }
 
     incorrect++
-    // Do a different thing
-    // updateView(incorrect)
+    updateView();
+  }
+
+  // When a question is answered, show a dad joke, generate yay or nay buttons
+  const updateView = x => {
+    touch('show', ['#jokeDisplay']);
+    button();
+  }
+
+  // Function to create buttons in the jokeDisplay
+  const button = x => {
+    
+    var create = $('<button>')
+    create.addClass('btn');
+    $('#jokeDisplay').append(create);
+
+    if (correct++) {
+      $('.btn').text('yay');
+      $('.btn').on('click', getQuestion);
+    } else {
+      $('.btn').text('nay');
+      $('.btn').on('click', getQuestion);
+    }
   }
 
   $(document).on('click', '.answer', function () {

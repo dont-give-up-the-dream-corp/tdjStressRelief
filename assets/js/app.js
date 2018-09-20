@@ -20,7 +20,9 @@ $(document).ready(function () {
   // const show = x => $(x).show()
   // const hide = x => $(x).hide()
 
-  const touch = (method, [x, y = false]) => y ? $(x)[method](y) : $(x)[method]()
+  const touch = k.curryN(2, (method, [el, val = false]) => val ? $(el)[method](val) : $(el)[method]())
+
+  // console.log(touch('text', ['#correct']))
 
   const createList = x => {
     const $option = $(`<option value="${x.value}">`)
@@ -202,29 +204,48 @@ $(document).ready(function () {
   const updateScore = x => {
     if (x) {
       correct++
-      // Do a thing
-      // updateView(correct)
+      updateView();
     }
 
     incorrect++
-    // Do a different thing
-    // updateView(incorrect)
+    updateView();
+  }
+
+  // When a question is answered, show a dad joke, generate yay or nay buttons
+  const updateView = x => {
+    touch('show', ['#jokeDisplay']);
+    button();
+  }
+
+  // Function to create buttons in the jokeDisplay
+  const button = x => {
+    
+    var create = $('<button>')
+    create.addClass('btn');
+    $('#jokeDisplay').append(create);
+
+    if (correct++) {
+      $('.btn').text('yay');
+      $('.btn').on('click', getQuestion);
+    } else {
+      $('.btn').text('nay');
+      $('.btn').on('click', getQuestion);
+    }
   }
 
   $(document).on('click', '.answer', function () {
+    console.log(this)
     k.pipe([
-      touch('text', []),
+      touch('text'),
       checkAnswer(correctAnswer),
       updateScore,
       getJoke
-    ], this)
+    ], [this])
   })
 
   $(document).on('change', 'select', getQuestion)
 
-
   initialize(qArray)
 
-  $(document).on("click",".answer", checkAnswer )
-
+  $(document).on('click', '.answer', checkAnswer)
 })

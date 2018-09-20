@@ -1,6 +1,5 @@
 html{
     height:100%;
-    cursor:grab;
 }
 
 body{
@@ -42,6 +41,7 @@ span{
 .answer{
     padding: .5em;
     color:black;
+    cursor: pointer;
 }
 
 .form-control{

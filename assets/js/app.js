@@ -20,7 +20,9 @@ $(document).ready(function () {
   // const show = x => $(x).show()
   // const hide = x => $(x).hide()
 
-  const touch = (method, [x, y = false]) => y ? $(x)[method](y) : $(x)[method]()
+  const touch = k.curryN(2, (method, [el, val = false]) => val ? $(el)[method](val) : $(el)[method]())
+
+  // console.log(touch('text', ['#correct']))
 
   const createList = x => {
     const $option = $(`<option value="${x.value}">`)
@@ -232,19 +234,18 @@ $(document).ready(function () {
   }
 
   $(document).on('click', '.answer', function () {
+    console.log(this)
     k.pipe([
-      touch('text', []),
+      touch('text'),
       checkAnswer(correctAnswer),
       updateScore,
       getJoke
-    ], this)
+    ], [this])
   })
 
   $(document).on('change', 'select', getQuestion)
 
-
   initialize(qArray)
 
-  $(document).on("click",".answer", checkAnswer )
-
+  $(document).on('click', '.answer', checkAnswer)
 })

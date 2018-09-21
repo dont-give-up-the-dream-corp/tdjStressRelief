@@ -182,7 +182,7 @@ $(document).ready(function () {
   }
 
   const getAnswers = function (x) {
-    const $li = touch('addClass', ['<li>', 'answer'])
+    const $li = touch('addClass', ['<li>', 'answer list-group-item list-group-item-action'])
     touch('text', [$li, decodeURIComponent(x)])
     touch('append', ['ul', $li])
   }

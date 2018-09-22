@@ -28,7 +28,7 @@ body{
     font-family: 'Julius Sans One', sans-serif;
     font-size:1.3rem;
     background-color:skyblue;
-    background-image: linear-gradient(to top,skyblue,white, rgb(2, 250, 229));
+    background-image: linear-gradient(to top,skyblue,skyblue, rgb(2, 250, 229),rgb(2, 250, 229),white);
     background-position: center;
     
 }
@@ -40,6 +40,17 @@ h6{
 span{
     float:right;
 }
+
+.btn-dark:visited{
+    background-color:rgb(2,250,229)
+}
+.btn-dark:hover{
+    background-color:rgb(2,250,229)
+}
+.btn-dark:active{
+    background-color:rgb(2,250,229)
+}
+
 
 .jumbotron-fluid{
     text-align: center;
@@ -93,20 +104,24 @@ span{
 
 #instructions{
     background-color:white;
-    font-size:1rem;
+    font-size:15px;
     padding:.8rem;
-    border:solid black 2px;
+    border:solid black 1px;
+    border-radius:.25rem;
     margin:.8rem 0rem 0rem 0rem;
-    max-height:8.5rem;
+    height:8rem;
+    
 }
 
 #quotes{
     background-color:white;
-    font-size:1.2rem;
+    font-size:1.5rem;
     padding:1.2rem;
-    border:solid black 2px;
+    border: black solid 1px;
+    border-radius:.25rem;
     margin:.8rem 0rem 0rem 0rem;
-    max-height:8.5rem;
+    font-family: 'Caveat', cursive;
+    height:8rem;
 
 }
 
@@ -116,9 +131,10 @@ span{
 
 #subtitle{
     padding-top:1rem;
+    font-style:bold;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
     #quotes {
       visibility: hidden;
       clear: both;
@@ -137,4 +153,38 @@ span{
         font-size:1rem;
     }
   }
+
+  @media screen and (min-width: 769px) and (max-width: 990px){
+      #quotes{
+          height:13.5rem;
+          padding-top:2rem;
+          
+      }
+      #instructions{
+          height:13.5rem;
+          padding-top:1.5rem;
+      }
+  }
+
+  @media screen and (min-width: 991px) and (max-width: 1024px){
+      #quotes{
+          height:9rem;
+          padding-top:.75rem;
+      }
+      #instructions{
+          height:9rem;
+      }
+  }
+
+  @media screen and (min-width: 1025px) and (max-width:1205px){
+      #quotes{
+          height:9rem;
+          padding-top:1.5rem;
+      }
+      #instructions{
+          height:9rem
+      }
+  }
+
+
 

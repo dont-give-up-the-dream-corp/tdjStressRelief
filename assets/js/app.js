@@ -1,62 +1,5 @@
 $(document).ready(function () {
   const k = kyanite
-  let question = ''
-  let possAnswers = []
-  let correctAnswer = ''
-  const gifs = {
-    correct: ['https://via.placeholder.com/350x150'],
-    incorrect: ['https://via.placeholder.com/250x150']
-  }
-
-  const touch = k.curryN(2, (method, [el, val = false]) => val ? $(el)[method](val) : $(el)[method]())
-
-  const createList = x => {
-    const $option = $(`<option value="${x.value}">`)
-    touch('text', [$option, x.category])
-    touch('append', ['select', $option])
-  }
-
-  const shuffleArray = function (array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1))
-      let temp = array[i]
-      array[i] = array[j]
-      array[j] = temp
-    }
-    return array
-  }
-
-  const getQuestion = function () {
-    let qCategory = touch('val', ['select :selected'])
-    const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + qCategory + '&encode=url3986'
-    $.ajax({
-      url: qQueryUrl,
-      method: 'GET'
-    }).then(function (x) {
-      const response = x.results[0]
-      console.log(response)
-      question = decodeURIComponent(response.question)
-      correctAnswer = decodeURIComponent(response.correct_answer)
-      possAnswers = shuffleArray(k.concat([response.incorrect_answers, correctAnswer]))
-      touch('text', ['#question', question])
-      touch('empty', ['ul'])
-      displayAnswers(possAnswers)
-    })
-  }
-
-  const getJoke = function () {
-    $.ajax({
-      url: 'https://icanhazdadjoke.com/',
-      method: 'GET',
-      headers: {
-        Accept: 'application/json'
-      }
-    }).then(function (response) {
-      touch('text', ['#joke', response.joke])
-      touch('show', ['#jokeDisplay'])
-      touch('hide', ['#questionDisplay'])
-    })
-  }
 
   const qArray = [
     {
@@ -161,12 +104,56 @@ $(document).ready(function () {
     }
   ]
 
+  let question = ''
+  let possAnswers = []
+  let correctAnswer = ''
+  const gifs = {
+    correct: ['https://via.placeholder.com/350x150'],
+    incorrect: ['https://via.placeholder.com/250x150']
+  }
+
+  const touch = k.curryN(2, (method, [el, val = false]) => val ? $(el)[method](val) : $(el)[method]())
+
+  const shuffleArray = function (array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1))
+      let temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
+    return array
+  }
+
+  const createList = x => {
+    const $option = $(`<option value="${x.value}">`)
+    touch('text', [$option, x.category])
+    touch('append', ['select', $option])
+  }
+
   const initialize = x => {
     x.forEach(createList)
     touch('hide', ['#correct'])
     touch('hide', ['#wrong'])
     touch('hide', ['#jokeDisplay'])
     touch('show', ['#questionDisplay'])
+  }
+
+  const getQuestion = function () {
+    let qCategory = touch('val', ['select :selected'])
+    const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + qCategory + '&encode=url3986'
+    $.ajax({
+      url: qQueryUrl,
+      method: 'GET'
+    }).then(function (x) {
+      const response = x.results[0]
+      console.log(response)
+      question = decodeURIComponent(response.question)
+      correctAnswer = decodeURIComponent(response.correct_answer)
+      possAnswers = shuffleArray(k.concat([response.incorrect_answers, correctAnswer]))
+      touch('text', ['#question', question])
+      touch('empty', ['ul'])
+      displayAnswers(possAnswers)
+    })
   }
 
   const getAnswers = function (x) {
@@ -179,12 +166,28 @@ $(document).ready(function () {
 
   const checkAnswer = k.curry((cAnswer, gAnswer) => gAnswer === cAnswer)
 
+  const getJoke = function () {
+    $.ajax({
+      url: 'https://icanhazdadjoke.com/',
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      }
+    }).then(function (response) {
+      touch('text', ['#joke', response.joke])
+      touch('show', ['#jokeDisplay'])
+      touch('hide', ['#questionDisplay'])
+    })
+  }
+
   const getGif = x => x ? shuffleArray(gifs.correct) : shuffleArray(gifs.incorrect)
 
   const displayGif = k.curry(function (ans, x) {
     touch('text', ['#answer', ans])
     $('img').attr('src', getGif(x))
   })
+
+  $(document).on('change', 'select', getQuestion)
 
   $(document).on('click', '.answer', function () {
     k.pipe([
@@ -194,8 +197,6 @@ $(document).ready(function () {
       getJoke
     ], [this])
   })
-
-  $(document).on('change', 'select', getQuestion)
 
   $(document).on('click', '#next', () => {
     getQuestion()

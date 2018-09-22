@@ -16,6 +16,7 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Caveat|Faster+One|Julius+Sans+One|Marmelad|Press+Start+2P" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css?family=Boogaloo|Carter+One|Chewy|IBM+Plex+Serif|Press+Start+2P" rel="stylesheet">
 </head>
 
@@ -29,10 +30,11 @@
                     <h3>-Jackie Chan</h3>
                 </div>
                 <div class = "col-xs-12 col-sm-12 col-md-6">
-                    <h1 class="display-4">Stress Relief</h1>
+                    <h1 class="display-4" id = "title">Trivia Stress Relief</h1>
                     <!-- Drop-Down Topic Selector -->
                     <select name="trivia_category" class="form-control">
                     </select>
+                    <h3 id = "subtitle">Now made with 100% Organic Dad Jokes</h3>
                 </div>
                 <div class = "col-xs-12 col-sm-12 col-md-3" id = "instructions">
                     <!-- <h2>Instructions:</h2> -->
@@ -54,7 +56,7 @@
             <div class="card-body" id="jokeDisplay">
                 <img src = "">
                 <h5 class="card-title" id="joke">Select a Topic to Begin!</h5>
-                <button>Next</button>
+                <button class = "btn btn-primary" id = "next">Next</button>
             </div>
             <div id="correct">
                 CORRECT!

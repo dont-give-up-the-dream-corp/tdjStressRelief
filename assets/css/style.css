@@ -1,15 +1,19 @@
 html{
     height:100%;
+    
 }
 
 body{
-    background-color:skyblue;
+    /* background-color:skyblue; */
     /* font-family: 'Boogaloo', cursive;
     font-family: 'Press Start 2P', cursive; */
     /* font-family: 'Chewy', cursive; */
     font-family: 'Carter One', cursive;
     /* font-family: 'IBM Plex Serif', serif; */
     font-size:1.3rem;
+    background-image: linear-gradient(to top,white, rgb(2, 250, 229));
+    background-position: center;
+    
 }
 
 h6{
@@ -24,8 +28,7 @@ span{
     text-align: center;
     padding: 1rem 2rem;
     margin:0;
-    background-color:orange;
-    border-bottom:solid black 3px;
+    background-color:rgb(0,0,0,0)
 }
 
 .card{
@@ -66,7 +69,33 @@ span{
     margin: auto;
     border: solid grey 2px;
     margin-bottom:.8rem;
-    margin-top:0px;
-    
+    margin-top:0px; 
 }
+
+#instructions{
+    background-color:white;
+    font-size:1rem;
+    padding:.8rem;
+    border:solid black 2px;
+    margin:.8rem 0rem 0rem 0rem
+}
+
+#quotes{
+    background-color:white;
+    font-size:1.2rem;
+    padding:1.2rem;
+    border:solid black 2px;
+    margin:.8rem 0rem 0rem 0rem
+}
+
+@media screen and (max-width: 600px) {
+    #quotes {
+      visibility: hidden;
+      clear: both;
+      float: left;
+      margin: 10px auto 5px 20px;
+      width: 28%;
+      display: none;
+    }
+  }
 

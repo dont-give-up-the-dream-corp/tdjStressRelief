@@ -1,0 +1,195 @@
+html{
+    height:100%;
+    
+}
+
+body{  
+
+    /* font-family: 'Caveat', cursive;
+
+    font-family: 'Julius Sans One', sans-serif;
+
+    font-family: 'Press Start 2P', cursive;
+
+    font-family: 'Marmelad', sans-serif;
+
+    font-family: 'Faster One', cursive;
+
+    font-family: 'Boogaloo', cursive;
+
+    font-family: 'Press Start 2P', cursive;
+
+    font-family: 'Chewy', cursive;
+
+    font-family: 'Carter One', cursive;
+
+    font-family: 'IBM Plex Serif', serif; */
+
+    font-family: 'Julius Sans One', sans-serif;
+    font-size:1.3rem;
+    background-color:skyblue;
+    background-image: linear-gradient(to top,skyblue,skyblue, rgb(2, 250, 229),rgb(2, 250, 229),white);
+    background-position: center;
+    
+}
+
+h6{
+    float:left;
+}
+
+span{
+    float:right;
+}
+
+.btn-dark:visited{
+    background-color:rgb(2,250,229)
+}
+.btn-dark:hover{
+    background-color:rgb(2,250,229)
+}
+.btn-dark:active{
+    background-color:rgb(2,250,229)
+}
+
+
+.jumbotron-fluid{
+    text-align: center;
+    padding: 1rem 2rem;
+    margin:0;
+    background-color:rgb(0,0,0,0);
+}
+
+.card{
+    text-align:center;
+    margin-top:1em;
+    border:solid black 3px;
+    margin-bottom:1em;
+}
+
+.card-body{
+    padding-bottom:.8rem
+}
+
+.answer{
+    padding: .5em;
+    color:black;
+    cursor: pointer;
+}
+
+.form-control{
+    width:12rem;
+    margin:auto;
+    font-size:.7rem;
+    margin-top:.5rem;
+    margin-bottom:.2rem;
+}
+
+.list-group-item-action:hover {
+    color: white;
+    text-decoration: none;
+    background-color: black;
+    transition: background-color .75s ease;
+}
+
+#scoreDisplay{
+    width:200px;
+    float:none;
+    background-color:lightgray;
+    padding:3px;
+    margin: auto;
+    border: solid grey 2px;
+    margin-bottom:.8rem;
+    margin-top:0px; 
+}
+
+#instructions{
+    background-color:white;
+    font-size:15px;
+    padding:.8rem;
+    border:solid black 1px;
+    border-radius:.25rem;
+    margin:.8rem 0rem 0rem 0rem;
+    height:8rem;
+    
+}
+
+#quotes{
+    background-color:white;
+    font-size:1.5rem;
+    padding:1.2rem;
+    border: black solid 1px;
+    border-radius:.25rem;
+    margin:.8rem 0rem 0rem 0rem;
+    font-family: 'Caveat', cursive;
+    height:8rem;
+
+}
+
+#title{
+    font-family: 'Faster One', cursive;
+}
+
+#subtitle{
+    padding-top:1rem;
+    font-style:bold;
+}
+
+@media screen and (max-width: 767px) {
+    #quotes {
+      visibility: hidden;
+      clear: both;
+      float: left;
+      margin: 10px auto 5px 20px;
+      width: 28%;
+      display: none;
+    }
+    #title{
+        font-size:3rem;
+    }
+    #instructions{
+      visibility: hidden;
+      clear: both;
+      float: left;
+      margin: 10px auto 5px 20px;
+      width: 28%;
+      display: none;
+    }
+    #subtitle{
+        font-size:1rem;
+    }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 990px){
+      #quotes{
+          height:13.5rem;
+          padding-top:2rem;
+          
+      }
+      #instructions{
+          height:13.5rem;
+          padding-top:1.5rem;
+      }
+  }
+
+  @media screen and (min-width: 991px) and (max-width: 1024px){
+      #quotes{
+          height:9rem;
+          padding-top:.75rem;
+      }
+      #instructions{
+          height:9rem;
+      }
+  }
+
+  @media screen and (min-width: 1025px) and (max-width:1205px){
+      #quotes{
+          height:9rem;
+          padding-top:1.5rem;
+      }
+      #instructions{
+          height:9rem
+      }
+  }
+
+
+

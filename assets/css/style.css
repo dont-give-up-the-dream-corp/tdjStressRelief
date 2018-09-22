@@ -3,15 +3,32 @@ html{
     
 }
 
-body{
-    /* background-color:skyblue; */
-    /* font-family: 'Boogaloo', cursive;
-    font-family: 'Press Start 2P', cursive; */
-    /* font-family: 'Chewy', cursive; */
+body{  
+
+    /* font-family: 'Caveat', cursive;
+
+    font-family: 'Julius Sans One', sans-serif;
+
+    font-family: 'Press Start 2P', cursive;
+
+    font-family: 'Marmelad', sans-serif;
+
+    font-family: 'Faster One', cursive;
+
+    font-family: 'Boogaloo', cursive;
+
+    font-family: 'Press Start 2P', cursive;
+
+    font-family: 'Chewy', cursive;
+
     font-family: 'Carter One', cursive;
-    /* font-family: 'IBM Plex Serif', serif; */
+
+    font-family: 'IBM Plex Serif', serif; */
+
+    font-family: 'Julius Sans One', sans-serif;
     font-size:1.3rem;
-    background-image: linear-gradient(to top,white, rgb(2, 250, 229));
+    background-color:skyblue;
+    background-image: linear-gradient(to top,skyblue,white, rgb(2, 250, 229));
     background-position: center;
     
 }
@@ -28,13 +45,14 @@ span{
     text-align: center;
     padding: 1rem 2rem;
     margin:0;
-    background-color:rgb(0,0,0,0)
+    background-color:rgb(0,0,0,0);
 }
 
 .card{
     text-align:center;
     margin-top:1em;
     border:solid black 3px;
+    margin-bottom:1em;
 }
 
 .card-body{
@@ -59,6 +77,7 @@ span{
     color: white;
     text-decoration: none;
     background-color: black;
+    transition: background-color .75s ease;
 }
 
 #scoreDisplay{
@@ -77,7 +96,8 @@ span{
     font-size:1rem;
     padding:.8rem;
     border:solid black 2px;
-    margin:.8rem 0rem 0rem 0rem
+    margin:.8rem 0rem 0rem 0rem;
+    max-height:8.5rem;
 }
 
 #quotes{
@@ -85,7 +105,17 @@ span{
     font-size:1.2rem;
     padding:1.2rem;
     border:solid black 2px;
-    margin:.8rem 0rem 0rem 0rem
+    margin:.8rem 0rem 0rem 0rem;
+    max-height:8.5rem;
+
+}
+
+#title{
+    font-family: 'Faster One', cursive;
+}
+
+#subtitle{
+    padding-top:1rem;
 }
 
 @media screen and (max-width: 600px) {
@@ -96,6 +126,15 @@ span{
       margin: 10px auto 5px 20px;
       width: 28%;
       display: none;
+    }
+    #title{
+        font-size:3rem;
+    }
+    #instructions{
+        display:none;
+    }
+    #subtitle{
+        font-size:1rem;
     }
   }
 

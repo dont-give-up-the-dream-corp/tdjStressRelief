@@ -108,8 +108,8 @@ $(document).ready(function () {
   let possAnswers = []
   let correctAnswer = ''
   const gifs = {
-    correct: ['https://via.placeholder.com/350x150'],
-    incorrect: ['https://via.placeholder.com/250x150']
+    correct: ['assets/images/correct/funnyface1.gif', 'assets/images/correct/7BTY.gif', 'assets/images/correct/correct7.gif', 'assets/images/correct/emurhy1.gif', 'assets/images/correct/emurphy.gif', 'assets/images/correct/george.gif'],
+    incorrect: ['assets/images/wrong/funnyface4.gif', 'assets/images/wrong/sadfunnyface1.gif', 'assets/images/wrong/sadfunnyface2.gif', 'assets/images/wrong/wrong-answer-gif-3.gif', 'assets/images/wrong/wrong2.gif']
   }
 
   const touch = k.curryN(2, (method, [el, val = false]) => val ? $(el)[method](val) : $(el)[method]())
@@ -180,14 +180,17 @@ $(document).ready(function () {
     })
   }
 
-  const getGif = x => x ? shuffleArray(gifs.correct) : shuffleArray(gifs.incorrect)
+  const getGif = x => x ? shuffleArray(gifs.correct)[0] : shuffleArray(gifs.incorrect)[0]
 
   const displayGif = k.curry(function (ans, x) {
-    touch('text', ['#answer', ans])
+    touch('text', ['#answer', 'Correct Answer is: ' + ans])
     $('img').attr('src', getGif(x))
   })
 
-  $(document).on('change', 'select', getQuestion)
+  $(document).on('change', 'select', () => {
+    getQuestion()
+    initialize(qArray)
+  })
 
   $(document).on('click', '.answer', function () {
     k.pipe([

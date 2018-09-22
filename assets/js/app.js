@@ -166,6 +166,7 @@ $(document).ready(function () {
     touch('hide', ['#correct'])
     touch('hide', ['#wrong'])
     touch('hide', ['#jokeDisplay'])
+    touch('show', ['#questionDisplay'])
   }
 
   const getAnswers = function (x) {
@@ -196,7 +197,10 @@ $(document).ready(function () {
 
   $(document).on('change', 'select', getQuestion)
 
-  initialize(qArray)
+  $(document).on('click', '#next', () => {
+    getQuestion()
+    initialize(qArray)
+  })
 
-  $(document).on('click', '.answer', checkAnswer)
+  initialize(qArray)
 })

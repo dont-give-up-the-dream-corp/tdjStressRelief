@@ -6,10 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Stress Relief: Trivia and Dad Jokes!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/kyanite@latest/dist/kyanite.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Caveat|Faster+One|Julius+Sans+One|Marmelad|Press+Start+2P" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css?family=Boogaloo|Carter+One|Chewy|IBM+Plex+Serif|Press+Start+2P" rel="stylesheet">
 </head>
 
@@ -17,31 +24,49 @@
     <!-- Header Line -->
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">Stress Relief</h1>
-            <!-- Drop-Down Topic Selector -->
-            <select name="trivia_category" class="form-control">
-            </select>
+            <div class="row">
+                <div class="col-xs-0 col-sm-0 col-md-3" id="quotes">
+                    <h3>Sometimes I do need to go to karaoke, sometimes I need to relax.</h3>
+                    <h3>-Jackie Chan</h3>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <h1 class="display-4">Stress Relief</h1>
+                    <!-- Drop-Down Topic Selector -->
+                    <select name="trivia_category" class="form-control">
+                    </select>
+                    <h3 id = "subtitle">Now made with 100% Organic Dad Jokes</h3>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-3" id="instructions">
+                    <!-- <h2>Instructions:</h2> -->
+                    <h3>Stressed out? Let's answer some trivia questions and laugh at some jokes!</h3>
+                    <h3>Pick a topic from the drop-down list to begin your journey to complete stress relief!</h3>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Main Container -->
     <div class="container">
         <div class="card" style="width: 100%;">
-            <div class="card-body">
+            <div class="card-body" id="questionDisplay">
                 <h5 class="card-title" id="question">Select a Topic to Begin!</h5>
                 <ul id="answerDisplay">
                 </ul>
             </div>
+            <div class="card-body" id="jokeDisplay">
+                <p id="answer"></p>
+                <img src="">
+                <h5 class="card-title" id="joke">Select a Topic to Begin!</h5>
+                <button class="btn btn-primary" id="next">Next</button>
+            </div>
+            <div id="correct">
+                CORRECT!
+            </div>
+            <div id="wrong">WRONG!</div>
         </div>
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/kyanite@latest/dist/kyanite.min.js"></script>
-    <script src="assets/js/app.js"></script>
 </body>
+
+<script src="assets/js/app.js"></script>
 
 </html>

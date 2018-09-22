@@ -1,53 +1,5 @@
 $(document).ready(function () {
   const k = kyanite
-  let question = ''
-  let possAnswers = []
-  let correctAnswer = ''
-
-  const concat = (x, y) => k.concat([x, y])
-  const forEach = (x, y) => x.forEach(y)
-  const getVal = x => $(x).val()
-  const setText = (x, y) => $(x).text(y)
-  const getText = (x) => $(x).text()
-  const append = (x, y) => $(x).append(y)
-  const setAttr = (x, y, z) => $(x).attr(y, z)
-  const addClass = (x, y) => $(x).addClass(y)
-  const empty = (x) => $(x).empty()
-  const show = x => $(x).show()
-  const hide = x => $(x).hide()
-
-  const createList = function (x, y) {
-    const $option = setAttr('<option>', 'value', x.value)
-    setText($option, x.category)
-    append('select', $option)
-  }
-
-  const shuffleArray = function (array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1))
-      let temp = array[i]
-      array[i] = array[j]
-      array[j] = temp
-    }
-    return array
-  }
-
-  const getQuestion = function () {
-    let qCategory = getVal('select :selected')
-    const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + qCategory + '&encode=url3986'
-    $.ajax({
-      url: qQueryUrl,
-      method: 'GET'
-    }).then(function (x) {
-      const response = x.results[0]
-      question = decodeURIComponent(response.question)
-      correctAnswer = decodeURIComponent(response.correct_answer)
-      possAnswers = shuffleArray(concat(response.incorrect_answers, correctAnswer))
-      setText('#question', question)
-      empty('ul')
-      displayAnswers()
-    })
-  }
 
   const qArray = [
     {
@@ -152,34 +104,104 @@ $(document).ready(function () {
     }
   ]
 
-  const initialize = () => {
-    forEach(qArray, createList)
-    hide('#correct')
-    hide('#wrong')
+  let question = ''
+  let possAnswers = []
+  let correctAnswer = ''
+  const gifs = {
+    correct: ['https://via.placeholder.com/350x150'],
+    incorrect: ['https://via.placeholder.com/250x150']
+  }
+
+  const touch = k.curryN(2, (method, [el, val = false]) => val ? $(el)[method](val) : $(el)[method]())
+
+  const shuffleArray = function (array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1))
+      let temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
+    return array
+  }
+
+  const createList = x => {
+    const $option = $(`<option value="${x.value}">`)
+    touch('text', [$option, x.category])
+    touch('append', ['select', $option])
+  }
+
+  const initialize = x => {
+    x.forEach(createList)
+    touch('hide', ['#correct'])
+    touch('hide', ['#wrong'])
+    touch('hide', ['#jokeDisplay'])
+    touch('show', ['#questionDisplay'])
+  }
+
+  const getQuestion = function () {
+    let qCategory = touch('val', ['select :selected'])
+    const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + qCategory + '&encode=url3986'
+    $.ajax({
+      url: qQueryUrl,
+      method: 'GET'
+    }).then(function (x) {
+      const response = x.results[0]
+      console.log(response)
+      question = decodeURIComponent(response.question)
+      correctAnswer = decodeURIComponent(response.correct_answer)
+      possAnswers = shuffleArray(k.concat([response.incorrect_answers, correctAnswer]))
+      touch('text', ['#question', question])
+      touch('empty', ['ul'])
+      displayAnswers(possAnswers)
+    })
   }
 
   const getAnswers = function (x) {
-    const $li = addClass('<li>', 'answer')
-    setText($li, decodeURIComponent(x))
-    append('ul', $li)
+    const $li = touch('addClass', ['<li>', 'answer list-group-item-action list-group-item'])
+    touch('text', [$li, decodeURIComponent(x)])
+    touch('append', ['ul', $li])
   }
 
-  const displayAnswers = () => forEach(possAnswers, getAnswers)
+  const displayAnswers = x => x.forEach(getAnswers)
 
-  // Put correct div classes when added to HTML file
+  const checkAnswer = k.curry((cAnswer, gAnswer) => gAnswer === cAnswer)
 
-  const checkAnswer = k.curry((cAnswer, gAnswer) => gAnswer === cAnswer ? show('#correct') : show('#wrong'))
+  const getJoke = function () {
+    $.ajax({
+      url: 'https://icanhazdadjoke.com/',
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      }
+    }).then(function (response) {
+      touch('text', ['#joke', response.joke])
+      touch('show', ['#jokeDisplay'])
+      touch('hide', ['#questionDisplay'])
+    })
+  }
 
-  $(document).on('click', '.answer', function () {
-    let text = getText(this)
-    checkAnswer(correctAnswer, text)
+  const getGif = x => x ? shuffleArray(gifs.correct) : shuffleArray(gifs.incorrect)
+
+  const displayGif = k.curry(function (ans, x) {
+    touch('text', ['#answer', ans])
+    $('img').attr('src', getGif(x))
   })
+
   $(document).on('change', 'select', getQuestion)
 
-  k.pipe([
-    getText,
-    checkAnswer(correctAnswer)
-  ], this)
+  $(document).on('click', '.answer', function () {
+    k.pipe([
+      touch('text'),
+      checkAnswer(correctAnswer),
+      displayGif(correctAnswer),
+      getJoke
+    ], [this])
+  })
 
-  initialize()
+  $(document).on('click', '#next', () => {
+    getQuestion()
+    initialize(qArray)
+  })
+
+  initialize(qArray)
 })

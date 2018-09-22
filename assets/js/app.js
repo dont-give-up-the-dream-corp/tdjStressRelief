@@ -3,26 +3,12 @@ $(document).ready(function () {
   let question = ''
   let possAnswers = []
   let correctAnswer = ''
-  let correct = 0
-  let incorrect = 0
-
-  const percentage = k.curry((x, y) => y > 0 ? x / (x + y).toLocaleString('en-US', { style: 'percent' }) : Number('0').toLocaleString('en-US', { style: 'percent' }))
-
-  // const concat = (x, y) => k.concat([x, y])
-  // const forEach = (x, y) => x.forEach(y)
-  // const getVal = x => $(x).val()
-  // const setText = (x, y) => $(x).text(y)
-  // const getText = (x) => $(x).text()
-  // const append = (x, y) => $(x).append(y)
-  // const setAttr = (x, y, z) => $(x).attr(y, z)
-  // const addClass = (x, y) => $(x).addClass(y)
-  // const empty = (x) => $(x).empty()
-  // const show = x => $(x).show()
-  // const hide = x => $(x).hide()
+  const gifs = {
+    correct: ['https://via.placeholder.com/350x150'],
+    incorrect: ['https://via.placeholder.com/250x150']
+  }
 
   const touch = k.curryN(2, (method, [el, val = false]) => val ? $(el)[method](val) : $(el)[method]())
-
-  // console.log(touch('text', ['#correct']))
 
   const createList = x => {
     const $option = $(`<option value="${x.value}">`)
@@ -68,6 +54,7 @@ $(document).ready(function () {
     }).then(function (response) {
       touch('text', ['#joke', response.joke])
       touch('show', ['#jokeDisplay'])
+      touch('hide', ['#questionDisplay'])
     })
   }
 
@@ -182,63 +169,27 @@ $(document).ready(function () {
   }
 
   const getAnswers = function (x) {
-    const $li = touch('addClass', ['<li>', 'answer list-group-item list-group-item-action'])
+    const $li = touch('addClass', ['<li>', 'answer list-group-item-action list-group-item'])
     touch('text', [$li, decodeURIComponent(x)])
     touch('append', ['ul', $li])
   }
 
   const displayAnswers = x => x.forEach(getAnswers)
 
-  // Put correct div classes when added to HTML file
+  const checkAnswer = k.curry((cAnswer, gAnswer) => gAnswer === cAnswer)
 
-  const checkAnswer = k.curry((cAnswer, gAnswer) => {
-    if (gAnswer === cAnswer) {
-      touch('show', ['#correct'])
-      return true
-    }
+  const getGif = x => x ? shuffleArray(gifs.correct) : shuffleArray(gifs.incorrect)
 
-    touch('show', ['#wrong'])
-    return false
+  const displayGif = k.curry(function (ans, x) {
+    touch('text', ['#answer', ans])
+    $('img').attr('src', getGif(x))
   })
 
-  const updateScore = x => {
-    if (x) {
-      correct++
-      updateView();
-    }
-
-    incorrect++
-    updateView();
-  }
-
-  // When a question is answered, show a dad joke, generate yay or nay buttons
-  const updateView = x => {
-    touch('show', ['#jokeDisplay']);
-    button();
-  }
-
-  // Function to create buttons in the jokeDisplay
-  const button = x => {
-    
-    var create = $('<button>')
-    create.addClass('btn');
-    $('#jokeDisplay').append(create);
-
-    if (correct++) {
-      $('.btn').text('yay');
-      $('.btn').on('click', getQuestion);
-    } else {
-      $('.btn').text('nay');
-      $('.btn').on('click', getQuestion);
-    }
-  }
-
   $(document).on('click', '.answer', function () {
-    console.log(this)
     k.pipe([
       touch('text'),
       checkAnswer(correctAnswer),
-      updateScore,
+      displayGif(correctAnswer),
       getJoke
     ], [this])
   })

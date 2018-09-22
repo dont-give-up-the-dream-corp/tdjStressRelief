@@ -134,7 +134,7 @@ span{
     font-style:bold;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     #quotes {
       visibility: hidden;
       clear: both;
@@ -147,14 +147,19 @@ span{
         font-size:3rem;
     }
     #instructions{
-        display:none;
+      visibility: hidden;
+      clear: both;
+      float: left;
+      margin: 10px auto 5px 20px;
+      width: 28%;
+      display: none;
     }
     #subtitle{
         font-size:1rem;
     }
   }
 
-  @media screen and (min-width: 769px) and (max-width: 990px){
+  @media screen and (min-width: 768px) and (max-width: 990px){
       #quotes{
           height:13.5rem;
           padding-top:2rem;

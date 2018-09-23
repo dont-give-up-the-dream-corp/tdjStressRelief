@@ -142,6 +142,7 @@ $(document).ready(function () {
   const getQuestion = function () {
     let qCategory = touch('val', ['select :selected'])
     const qQueryUrl = 'https://opentdb.com/api.php?amount=1&category=' + qCategory + '&encode=url3986'
+    touch('empty', ['ul'])
     $.ajax({
       url: qQueryUrl,
       method: 'GET'
@@ -152,7 +153,6 @@ $(document).ready(function () {
       correctAnswer = decodeURIComponent(response.correct_answer)
       possAnswers = shuffleArray(k.concat([response.incorrect_answers, correctAnswer]))
       touch('text', ['#question', question])
-      touch('empty', ['ul'])
       displayAnswers(possAnswers)
     })
   }
@@ -161,6 +161,7 @@ $(document).ready(function () {
     const $li = touch('addClass', ['<li>', 'answer list-group-item-action list-group-item'])
     touch('text', [$li, decodeURIComponent(x)])
     touch('append', ['ul', $li])
+    initialize(qArray)
   }
 
   const displayAnswers = x => x.forEach(getAnswers)
@@ -204,7 +205,6 @@ $(document).ready(function () {
 
   $(document).on('click', '#next', () => {
     getQuestion()
-    initialize(qArray)
   })
 
   initialize(qArray)

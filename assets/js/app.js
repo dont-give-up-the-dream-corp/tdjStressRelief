@@ -133,6 +133,8 @@ $(document).ready(function () {
   const initialize = x => {
     touch('empty', ['select'])
     x.forEach(createList)
+    touch('hide', ['#correct'])
+    touch('hide', ['#wrong'])
     touch('hide', ['#jokeDisplay'])
     touch('show', ['#questionDisplay'])
   }
@@ -149,8 +151,11 @@ $(document).ready(function () {
       console.log(response)
       question = decodeURIComponent(response.question)
       correctAnswer = decodeURIComponent(response.correct_answer)
-      possAnswers = shuffleArray(k.concat([response.incorrect_answers, correctAnswer]))
+      possAnswers = shuffleArray(k.concatMap(x => x, [response.incorrect_answers, correctAnswer]))
       touch('text', ['#question', question])
+      console.log(response.incorrect_answers)
+
+      console.log(possAnswers)
       displayAnswers(possAnswers)
     })
   }
@@ -189,7 +194,6 @@ $(document).ready(function () {
 
   $(document).on('change', 'select', () => {
     getQuestion()
-    initialize(qArray)
   })
 
   $(document).on('click', '.answer', function () {

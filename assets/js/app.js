@@ -150,8 +150,6 @@ $(document).ready(function () {
       question = decodeURIComponent(response.question)
       correctAnswer = decodeURIComponent(response.correct_answer)
       possAnswers = shuffleArray(k.concat([response.incorrect_answers, correctAnswer]))
-      initialize(qArray)
-
       touch('text', ['#question', question])
       displayAnswers(possAnswers)
     })

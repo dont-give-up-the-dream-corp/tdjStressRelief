@@ -133,6 +133,8 @@ $(document).ready(function () {
   const initialize = x => {
     touch('empty', ['select'])
     x.forEach(createList)
+    touch('hide', ['#correct'])
+    touch('hide', ['#wrong'])
     touch('hide', ['#jokeDisplay'])
     touch('show', ['#questionDisplay'])
   }
